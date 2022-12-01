@@ -1,0 +1,38 @@
+﻿<Page
+    x:Class="LEDMatrixVideoPlayer.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:LEDMatrixVideoPlayer"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="AUTO"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="AUTO"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <ListView Grid.Column="0" 
+                  ItemsSource="{x:Bind ViewModel.SerialDevices, Mode=OneWay}" SelectionMode="Single" SelectedItem="{x:Bind ViewModel.SelectedSerialDevice, Mode=TwoWay}"
+                  SelectionChanged="ListView_SelectionChanged">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Path=Name}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <MediaPlayerElement Grid.Column="1" x:Name="mediaPlayer"
+                            Source="{x:Bind ViewModel.VideoMediaSource, Mode=OneWay}"/>
+        <Image Grid.Column="1" Source="{x:Bind ViewModel.VideoBitmap, Mode=OneWay}"/>
+
+        <Button Grid.Row="1" Click="Button_Click">Read Serial!</Button>
+    </Grid>
+</Page>
